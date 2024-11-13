@@ -4,6 +4,7 @@ const axios = require("axios");
 const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 const cheerio = require("cheerio");
+const cors = require("cors");
 const urlGet = require('./url');
 const PreviousFastMatches = require('./models/matches');
 const matchDifference = require('./matcher');
@@ -22,6 +23,9 @@ const connectDB = async () => {
   
   connectDB();
 // Middleware for handling JSON requests
+app.use(cors({
+    origin: "https://easy-highlight-frontend.vercel.app"
+}));
 app.use(express.json());
 
 // Simple GET route
