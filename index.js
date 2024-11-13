@@ -56,7 +56,7 @@ app.get('/', async (req, res) => {
         if(leagueType === "La Liga SPAIN") leagueType = "SPAIN La Liga";
         if(leagueType === "Bundesliga Germany") leagueType = "German Bundesliga";
         if(leagueType === "England Premier League") leagueType = "English Premier League";
-        let modifiedTitle = title.replace(/_\/__Highlights_Video/, "");
+        let modifiedTitle = title.replace("__Highlights_Video", "");
         let teams = modifiedTitle.split('_v_');
         let teamNames = [teams[0], teams[1]];
 
