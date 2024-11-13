@@ -1,13 +1,18 @@
 // index.js
 const express = require('express');
+const axios = require("axios");
+const cheerio = require("cheerio");
 const app = express();
 
 // Middleware for handling JSON requests
 app.use(express.json());
 
 // Simple GET route
-app.get('/', (req, res) => {
-  res.send('Hello from Cyclic Node.js backend!');
+app.get('/', async (req, res) => {
+    const url = "https://hoofoot.com/"
+    const response = await axios.get(url);
+    const html = response.data;
+    res.send(html);
 });
 
 // Start the server
