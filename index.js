@@ -24,7 +24,7 @@ const connectDB = async () => {
   connectDB();
 // Middleware for handling JSON requests
 app.use(cors({
-    origin: "https://easy-highlight-frontend.vercel.app"
+    origin: true
 }));
 app.use(express.json());
 
