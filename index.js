@@ -9,7 +9,7 @@ app.use(express.json());
 
 // Simple GET route
 app.get('/', async (req, res) => {
-    const url = "https://hoofoot.com/"
+    const url = "https://www.fasthighlights.net/"
     const response = await axios.get(url);
     const html = response.data;
     res.send(html);
