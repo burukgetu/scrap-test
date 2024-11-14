@@ -8,6 +8,7 @@ const cors = require("cors");
 const urlGet = require('./url');
 const PreviousFastMatches = require('./models/matches');
 const matchDifference = require('./matcher');
+const sendMessage = require('./sendMessage');
 const app = express();
 dotenv.config();
 
@@ -74,10 +75,11 @@ app.get('/', async (req, res) => {
         const previousmatches = await PreviousFastMatches.findOne({}, 'matches');
         const matches = matchDifference(previousmatches.matches, links)
         await matches.forEach(singleMatch => {
-            previousmatches.matches.push(singleMatch); // Push each match individually
+            previousmatches.matches.push(singleMatch);
+            sendMessage(singleMatch.title, singleMatch.teamNames, singleMatch.leagueType, singleMatch.image)
           });
         await previousmatches.save();
-        res.send("Saved");
+        res.send({"Saved": matches});
       })
       .catch((error) => {
           console.error('Error during scraping:', error);
