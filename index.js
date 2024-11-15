@@ -54,6 +54,8 @@ app.get('/', async (req, res) => {
         const image = $(el).find('div.read-img img').attr("src") // Example for other info
         let leagueType = $(el).find('div.category-min-read-wrap ul.cat-links li').first().text().trim();
         leagueType = leagueType + " " + $(el).find('div.category-min-read-wrap ul.cat-links li').eq(1).text().trim();
+        leagueType = leagueType + " " + $(el).find('div.category-min-read-wrap ul.cat-links li').eq(2).text().trim();
+        leagueType = leagueType.replace(" TRENDING","");
         if(leagueType === "La Liga SPAIN") leagueType = "SPAIN La Liga";
         if(leagueType === "Bundesliga Germany") leagueType = "German Bundesliga";
         if(leagueType === "England Premier League") leagueType = "English Premier League";
