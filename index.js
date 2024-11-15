@@ -74,6 +74,30 @@ app.get('/', async (req, res) => {
 
       Promise.all(promises)
       .then(async () => {
+        let newLinks = links
+                  // .slice(0,1)
+        // console.log({newLinks})
+        newLinks.forEach(link => {
+          async function updateMatch() {
+            const result = await PreviousFastMatches.findOne({
+              'matches.title': link.title
+            }).exec();
+
+            if (result) {
+              const oldUrl = result.matches.find(m => m.title === link.title);
+              // console.log("Old url ----- ", oldUrl.url)
+              // console.log("New url ----- ", link.url)
+              if (oldUrl && oldUrl.url !== link.url) {
+                oldUrl.url = link.url
+                await result.save();
+                // console.log({result})
+                console.log("Match url updated for the Match ___ \n---", link.title, "---\n --to ___ ---> ", oldUrl.url)
+              }
+
+            }
+          }
+          updateMatch();
+        })
         const previousmatches = await PreviousFastMatches.findOne({}, 'matches');
         const matches = matchDifference(previousmatches.matches, links)
         await matches.forEach(singleMatch => {
