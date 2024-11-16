@@ -103,7 +103,7 @@ app.get('/', async (req, res) => {
         const matches = matchDifference(previousmatches.matches, links)
         await matches.forEach(singleMatch => {
             previousmatches.matches.push(singleMatch);
-            sendMessage(singleMatch.title, singleMatch.teamNames, singleMatch.leagueType, singleMatch.image)
+            // sendMessage(singleMatch.title, singleMatch.teamNames, singleMatch.leagueType, singleMatch.image)
           });
         await previousmatches.save();
         res.send({"Saved": matches});
