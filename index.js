@@ -9,6 +9,7 @@ const urlGet = require('./url');
 const PreviousFastMatches = require('./models/matches');
 const matchDifference = require('./matcher');
 const sendMessage = require('./sendMessage');
+const PreviousMatch = require('./models/alternateUrl');
 const app = express();
 dotenv.config();
 
@@ -136,6 +137,27 @@ app.get('/match/:id/:title', async (req, res) => {
       res.status(500).json({ message: err.message });
     }
   });
+
+app.get('/alternate/:title', async (req, res) => {
+  const { title } = req.params;
+  const id = "6737d3b451df0d31666edd68";
+  const result = await PreviousMatch.findOne({ _id: id, 'matches.title': title });
+
+  if (!result) {
+    return res.status(404).json({ message: 'No Match found with the given id or match title' });
+  }
+
+  const match = result.matches.find(m => m.title === title);
+  
+  if (match) {
+    res.json(match);
+    console.log("GET /")  // Return the specific match
+  } else {
+    res.status(404).json({ message: 'No match found with that title' });
+    console.log("GET failed")
+  }
+  // res.send(item)
+})
 
 // Start the server
 const PORT = process.env.PORT || 3000;
